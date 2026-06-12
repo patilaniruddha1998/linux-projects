@@ -1,0 +1,33 @@
+Lab 6: Beyond chmod - Access Control Lists (ACLs)
+
+Title: The Multi-Team Sharing Dilemma
+Difficulty Level: Advanced
+Objective: Use ACLs to grant specific permissions to multiple users on a single file without changing the file's primary owner or group. Standard chmod cannot do this.
+Prerequisites: Install the ACL package (sudo apt install acl).
+
+
+Environment Setup Commands:
+
+mkdir -p ~/labs/security && cd ~/labs/security
+touch deployment_secrets.txt
+echo "DB_PASS=SuperSecret123" > deployment_secrets.txt
+sudo useradd dev_alice
+sudo useradd qa_bob
+
+
+Tasks to Perform:
+
+Check the current ACLs of the file using getfacl deployment_secrets.txt.
+
+Give dev_alice explicit read and write access to the file using setfacl.
+
+Give qa_bob explicit read-only access to the file.
+
+Verify the new granular permissions. You will notice a + symbol at the end of the standard ls -l output, indicating ACLs are active.
+
+Remove dev_alice's access entirely while keeping qa_bob's access intact.
+
+
+1. getfacl deployment_secrets.txt
+2. sudo setfacl -m u:dev_alice:rw deployment_secrets.txt
+3. setfacl -m u:qa_bob:r deployment_secrets.txt

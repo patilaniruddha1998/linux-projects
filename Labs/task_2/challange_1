@@ -1,0 +1,49 @@
+Challenge 1: The "Disk is Full" Illusion
+Scenario: An application crashed complaining of "No space left on device".
+Setup: Run df -h and confirm you have plenty of space. Then run df -i.
+
+The Task: 
+Explain how a disk can be "full" when df -h shows 50GB free. 
+Research the command needed to find out which directory is consuming the most inodes, 
+not the most gigabytes. Write the command.
+
+
+TIPS:
+A disk can be "full" in terms of inodes even if there is plenty of space available. Inodes are data structures used to keep information about files and directories. If all inodes are used up, you cannot create new files or directories, even if there is free space on the disk.
+To find out which directory is consuming the most inodes, you can use the following command:
+
+
+df -i            -----> This command shows the inode usage of the filesystem. It will display the total number of inodes, used inodes, free inodes, and the percentage of inodes used. If the percentage of inodes used is 100%, it means that no new files can be created, even if there is free space available on the disk.
+
+sudo find / -xdev -type f | cut -d/ -f2 | sort | uniq -c | sort -nr | head -10        
+------------> This command will find all files on the root filesystem, cut the directory names, sort them, count unique occurrences, sort them in reverse order, and display the top 10 directories consuming the most inodes. The -xdev option prevents find from descending into other filesystems.
+------------> This command does not show inode usage directly. Instead, it identifies which directories have the most files, which can help you understand where the inode usage is concentrated.
+
+
+
+ANSWER:
+
+Verify the disk space
+
+df -h  ---> This command shows the disk space usage of the filesystem. It will display the total size, used space, available space, and the percentage of space used. If df -h shows 50GB free, it means that there is plenty of space available on the disk. However, if df -i shows that all inodes are used up, it means that you cannot create new files or directories, even though there is free space on the disk.
+
+verify inodes
+
+df -i ---> This command shows the inode usage of the filesystem. It will display the total number of inodes, used inodes, free inodes, and the percentage of inodes used. If the percentage of inodes used is 100%, it means that no new files can be created, even if there is free space available on the disk.
+
+sudo find / -xdev -type f | cut -d/ -f2 | sort | uniq -c | sort -nr | head -10   
+
+
+
+
+
+
+LAB Setup
+1. Create a directory and fill it with a large number of small files to consume inodes.
+mkdir /tmp/inode_test
+for i in {1..10000}; do touch /tmp/inode_test/file_$i; done
+2. Run df -h to check disk space and df -i to check inode usage.
+df -h   
+df -i
+3. Use the command to find out which directory is consuming the most inodes.
+sudo find /tmp/inode_test -xdev -type f | cut -d/ -f2 | sort | uniq -c | sort -nr | head -10

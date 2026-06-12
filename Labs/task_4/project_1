@@ -1,0 +1,36 @@
+vi /home/<username>/rotate.sh 
+
+```
+#! /bin/bash
+
+LOG_DIR="${HOME}/app-logs"
+DATE=$(date +%F-%H%M%S)
+
+find ${LOG_DIR} -type f -name "*.log"  -size +1M | while read -r logfile
+do
+        filename=$(basename "$logfile" .log)
+        archive="$LOG_DIR/${filename}-${DATE}.tar.gz"
+        echo "rotating $logfile ---> $archive"
+
+
+        ## archive
+        tar -cvzf "$archive" -C "$LOG_DIR" "$(basename "$logfile")"
+
+        truncate -s 0 "$logfile"
+
+done
+```
+
+
+chmod +x rotate.sh
+
+Create a large log file (>1MB):
+```bash
+dd if=/dev/zero of=${HOME}/app-logs/large.log bs=1M count=2 
+```
+
+crontab -e
+
+0 0 * * * /home/<username>/rotate.sh >> /home/<username>/rotate.log 2>&1
+
+crontab -l

@@ -1,0 +1,385 @@
+variables:
+----------
+
+name=chenna
+
+name=ram
+
+
+variableName=<value>
+
+name=chenna  #this is string
+isWorking=true  # boolean value
+experience=8   # integer 
+
+name=chenna
+
+echo ${name}
+$(date)
+
+
+#! /bin/bash
+
+directoryName="/home/ubuntu/devops"
+
+mkdir $directoryName
+cd $directoryName
+
+
+naming conventions:
+-------------------
+a-z A-Z 0-9 underscore(_)
+
+variable name can only start with _ or alphabets
+
+var
+name1
+name2
+
+nameOfVehicle
+nameofvehicle
+
+you cannnot use reserved keywords
+if do done for ls
+
+user defined and environment variables
+
+name=chenna
+
+SHELL
+
+
+Types of Variables:
+-------------------
+1. local variables
+   name=chenna
+   local variable is something which is only available as part of the shell script
+   demo.sh
+   name=chenna
+   
+   demo1.sh
+   name=ram
+  
+2. Environment Variables
+    global variable, that are pre-defined that are set by the O.S
+     PATH USER SHELL	
+	printenv or env --> to display environment variables
+
+3. shell variables
+   BASH
+   BASH_VERSION
+   UID
+   
+   echo ${BASH}
+   
+4. positional variables:
+
+	to pass some values to the script while executing. or run time arguments
+	$0
+	
+	#! /bin/bash
+echo "my script name is $0"
+
+echo "My first argument is $1"
+
+echo "my second argument is $2"
+
+echo "all the paramaters passed with my script $@"
+
+echo "total parameters passed with my script $#"
+
+
+
+5. special variables
+
+$? --> to see the execution status of last command
+$$ --> to see the process id of current shell
+$! --> to see the PID of last background process
+
+
+variable assignment:
+--------------------
+1. direct assignment
+
+name=chenna
+
+2. taking i/p from the user
+
+#! /bin/bash
+
+echo "please enter your name"
+read name
+
+echo "thank you $name"
+
+3. command substitution
+
+assign o/p of one command to a variable
+
+today=$(date)
+
+4. Positional paramaters or command line arguments
+
+echo $0
+echo $1
+
+5. using source
+
+script.sh
+source ./vars.sh
+
+vars.sh
+name=chenna
+age=
+working
+username=
+password=
+
+
+Opearators:
+-----------
+operators are used to perform various tasks
+
+types of operators:
+-------------------
+
+1. Arithmetic operators
+2. Relational operators
+3. Logical operators
+4. string operators
+5. File operators
+
+1.Arithmetic operators
+ +  - * / %
+  
+  a=10
+  b=20
+  
+  echo "$a + $b is : $((a + b))"
+  
+  $(date)
+  ${JAVA_HOME}
+  $((a + b ))
+ 
+2. Relational operators
+to compare two values
+
+-eq --> equals to ( ==)
+-ne --> to check not equal to (!=) 
+-gt --> greater than (<)
+-lt  --> less than
+-ge --> greater than or equal to 
+-le --> less than or equal to
+
+These you have to use only with numbers
+
+a=10
+b=20
+if [ $a -eq $b ]; then
+	echo "a is equal to b"
+fi
+
+if [ $a -le $b ]; then
+	echo "a is equal to b"
+fi
+
+3. Logical operators
+
+AND - &&
+OR  - ||
+NOT - !
+
+true true --> true
+false false --> false
+true --> false
+false --> true
+
+a = 15
+if [[ $a -lt 20 ]] && [[ $a -gt 10 ]] && [[ $a -gt $b ]]; then
+	echo "$a is less than 20 and greater than 10"
+fi
+
+
+if [[ $a -lt 20 ]] || [[ $a -gt 10 ]]; then
+
+	echo "$a is less than 20 and greater than 10"
+
+fi
+a = 15
+if [[ ! $a -lt 20 ]]; then
+echo ".................."
+fi
+
+4. string operators
+
+=  ==  --> to check the equals
+!=
+
+name1=chenna
+name2=CHENNA
+
+if [[ $name1 != $name2 ]]; then
+echo "it is equals"
+fi
+
+read -p "enter your name " name
+if [ -z $name ]; then   --> this will check variable is empty
+echo "please provide valid name. it is empty"
+fi
+
+if [ -n $name ]; then     --> this will check variable is not empty
+echo " thank you $name "
+fi
+
+./script.sh one two three 
+
+
+5. File operators
+
+files have different properties
+
+-e --> to check whether file exists
+-f --> regular file
+-d --> directory exists
+-r --> file is readable
+-w --> file is writable
+-x --> file is executable
+-s --> file is not empty
+-L --> file is a symbolic link
+
+rw-r--rw--  --> 
+
+if [ -x $file ]; then
+echo "file exists"
+fi
+
+Conditional Statements:
+----------------------
+conditional statement will allow to execute different commands based on whether a condition is true or false
+
+if it is true do this or if it is false do this
+
+if [ $age -lt 18 ]; then
+   echo "not eligible for voting"
+fi
+
+types of conditional statements:
+--------------------------------
+1) if statement
+2) if else statement
+3) if-elif-else statement
+4) nested if statement
+5) case statement
+
+
+1) if statement
+
+if [[ $a -gt 20 ]]; then
+	echo "a is greater than 20"
+fi
+
+if this true, if it is false don't execute
+
+
+action=create
+if [[ "${action}" = "create" ]]; then
+		touch file.txt
+		chmod +x file.txt
+		
+		
+fi
+
+if [[ "${action}" == "create" ]]; then
+
+
+fi
+
+
+2) if-else statement:
+
+if [[ "${action}" == "create" ]]; then
+
+	touch file.txt
+else
+	echo " not creating a file "
+
+fi
+
+if [[ -f $file ]]; then
+   echo "file exists"
+   cat $file | grep "error"
+else
+	touch $file
+	chmod +x $file
+	./file
+fi
+
+
+3) if-elif-else statement
+
+to check multiple conditions we can go with if elif-else ladder
+
+if [ condition ]; then
+	----------------
+	-----------------
+elif [ condition ]
+	-----------
+	-----------
+	-----------
+elif [condition ]
+	------------
+	------------
+	------------
+	
+else
+	-----------
+	----------
+fi
+
+
+grading example
+
+percentage>=90
+   congratulations. GRADE A
+
+percentage > 75 
+   congratulations. GRADE B
+   
+percentage > 50
+ you are GRADE C
+ 
+ percentage < 50
+  failed. better luck next time
+  
+  if [[ $percentage -ge 90 ]]; then
+                echo " congratulations. GRADE A"
+        elif [[ $percentage -ge 75 ]]; then
+                echo " congratulation. GRADE B"
+        elif [[ $percentage -ge 50 ]]; then
+                echo "GRADE C"
+        else
+                echo "failed. better luck next time"
+  fi
+  
+ nested if statement:
+ ----------------------
+one condition statement inside a condition statement
+if the first condition is true then it will check the other if condition
+
+ #! /bin/bash
+percentage=$1
+if [[ -n $percentage ]]; then
+
+        if [[ $percentage -ge 90 ]]; then
+                echo " congratulations. GRADE A"
+        elif [[ $percentage -ge 75 ]]; then
+                echo " congratulation. GRADE B"
+        elif [[ $percentage -ge 50 ]]; then
+                echo "GRADE C"
+        else
+                echo "failed. better luck next time"
+        fi
+
+else
+        echo "please pass correct values. empty values are not expected. usage $0 80"
+fi

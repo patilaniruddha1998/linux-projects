@@ -1,0 +1,177 @@
+sudo:
+----
+sudo command allows a permitted user/ regular user to execute a command as another user, typically a root with elevated permissions
+
+1) usermod -aG sudo test --> not widely used
+
+2)
+vim /etc/sudoers
+vim /etc/sudoers.d/test
+
+3) visudo --> best option to add any to sudoers
+
+
+test   ALL=(ALL:ALL) NOPASSWD:ALL  --> syntax to give a user sudo access
+test123 ALL=(ALL:ALL) ALL
+
+
+username: test
+
+ALL --> from any host/ from any terminal 
+ALL  --> as any user
+ALL  --> all groups
+ALL  --> all commands
+
+File/Directory Permissions:
+---------------------------
+
+user(u) --> who has created this file. who is the owner of this file
+group(g) --> group also want to access this file
+others(o) --> everyone else
+
+3 types of permissions
+
+read (r=4)
+write (w=2)
+execute(x=1)
+
+r-x
+r-x
+
+rwxrwxr--
+
+file:
+-----
+read(r=4) -> whoever has read access can see the contents in the file
+write(w=2) --> he can edit this file
+execute(x=1) --> he can execute a binary or shell script
+
+
+directory:
+---------
+read(r=4) --> list the contents inside the direcotry
+write(w=2) --> enter (cd) into the direcotry
+execute(x=1) --> create, delete, rename files inside the direcotry
+
+umask: user file creation mode mask
+-----------------------------------
+it determines default permissions for any newly created new file
+
+
+default permissions for a file is 666
+default permissions for a direcotry is 777
+
+4+2+1
+4-> read
+2-> writes
+1 -> execute
+rwxrwxrwx --> any file
+777
+600 --> rw-------
+705 --> rwx---r-x
+500 --> r-x------
+
+666--> rw-rw-rw-
+file permission = default permission - umask value
+
+666
+002
+----
+664  --> rw-rw-r-- 
+
+666
+024
+----
+642  --> rw-r---w-
+
+
+777
+024
+---
+753 ---> rwxr-x-wx
+
+chmod: change mode
+------------------
+used to change permission for a file or directory
+
+chmod [options] mode file/directory
+
+user - rwx  7 
+group- rw   6
+others- r    4
+
+chmod 764 test.txt
+chmod u+rwx,g+rw,o+r test.txt
+chmod a+x 
+chmod a-x 
+
+chmod u-x test.txt
+
+
+0 -> no permission --> ---
+1 -> execute --> --x
+2 -> write --> -w-
+3 -> write and execute --> -wx
+4 -> read --> r--
+5 -> read and execute --> r-x
+6 --> read and write  --> rw- 
+7 --> all permission--> rwx
+
+
+chmod -R 777 directory
+chmod -v 664  file/directory
+
+
+chown: change owner
+-------------------
+used to change the user or group ownership of a file/directory
+
+chown [options] user[:group] file/directory
+
+chown user filename
+chown :group filename
+chown user:group file
+
+chown -R user:group  directory
+
+Network Commands:
+----------------
+ping
+
+ping works on icmp(internet control message protocol)
+
+http/ https oci 
+ping domain/ip 
+
+ip addr/ ifconfig
+-------------------
+to see or to configure interfaces of our system
+
+telnet:
+------
+used to see connectivity between system and server on particular port
+telnet ip port
+
+
+ss/ netstat
+-----------
+port bind to which process 
+
+ss -tnlp
+netstat -tnlp
+
+
+traceroute:
+-----------
+to see all the legs and latency between 
+
+nslookup:
+---------
+resolve domain to ip
+
+
+wget:
+-----
+download files/packages  from remote server
+
+wget <url>

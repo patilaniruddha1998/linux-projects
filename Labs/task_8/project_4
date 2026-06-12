@@ -1,0 +1,49 @@
+#! /bin/bash
+
+
+
+## Check if username is provided
+if [[ $# -ne 1 ]]; then
+    echo "username is required. i.e ./offboard.sh <username>"
+    exit 1
+fi
+
+
+## Check if user exists
+id "$1" &>/dev/null
+
+if [[ $? -ne 0 ]]; then
+    echo "User $1 does not exist."
+    exit 1
+fi
+
+## lock the user account
+usermod -L "$1"
+
+
+## Disable password for user
+chage -E 0 "$1"
+
+
+BACKUP_FOLDER="/var/backup"
+
+mkdir -p "$BACKUP_FOLDER"
+
+HOME_DIR=$(getent passwd "$1" | cut -d: -f6)
+
+find / -user "$1" 2>/dev/null >> "${BACKUP_FOLDER}_$1.txt"
+
+if [[ -d "$HOME_DIR" ]]; then
+    DATE=$(date +%F-%H%M%S)
+    tar -cvzf "$BACKUP_FOLDER"_"$DATE".tar.gz \
+        -C "$(dirname "$HOME_DIR")" \
+        "$(basename "$HOME_DIR")"
+    echo "Home directory backup created."
+else
+    echo "Home directory not found."
+fi
+
+echo "User $1 has been offboarded successfully."
+
+
+

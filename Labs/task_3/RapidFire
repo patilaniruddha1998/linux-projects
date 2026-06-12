@@ -1,0 +1,16 @@
+Rapid-Fire Command Questions
+
+How do you find the size of a specific directory in human-readable format without listing all subdirectories?
+---> du -sh /path/tp/directory
+
+What command shows you the open ports and the processes listening on them?
+---> ss -tunlp    or netstat -tunlp
+
+How do you permanently append /opt/custom/bin to your $PATH?
+---> echo 'export PATH=$PATH:/opt/custom/bin' >> ~/.bashrc
+
+What is the difference between >  and >> in shell redirection?
+---> '>' is for override the content, >> is for append the content
+
+How do you find files modified exactly 3 days ago?
+---> find . -type f -mtime 3

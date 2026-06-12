@@ -1,0 +1,10 @@
+Challenge 5: The Missing Config Data
+Scenario: You have a massive Nginx configuration file (nginx.conf) that is 1,000 lines long, but 800 of those lines are just comments (starting with #) or blank lines.
+The Task: Write a single command using grep (or egrep/sed) that prints the contents of nginx.conf to the screen, but removes all blank lines and removes all lines that start with a #.
+(This is a daily task to read bloated config files cleanly).
+
+
+Answer: 
+
+grep -vE '^\s*#|^\s*$' nginx.conf
+sed '/^\s*#/d, /^\s*$/d' nginx.conf

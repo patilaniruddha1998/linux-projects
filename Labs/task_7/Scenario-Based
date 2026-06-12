@@ -1,0 +1,44 @@
+1. The Slowdown: "A developer messages you: 'The web app is slow today.' 
+You SSH into the Linux server. 
+Walk me through the first three commands you run to determine if the bottleneck is CPU, Memory, or Disk I/O."
+
+top  or htop
+du -sh 
+iostat 1
+vmstat
+
+
+
+
+2. The Accident: "You accidentally ran chmod -x /bin/chmod. 
+Now you cannot change permissions on any files, and you cannot even fix chmod itself because it lacks execute permissions. 
+How do you recover from this without rebooting?" 
+(Hint: Think about how dynamic linkers/loaders work, e.g., /lib64/ld-linux-x86-64.so.2).
+
+
+
+Answer:
+ldd /bin/ls
+
+Example:
+
+linux-vdso.so.1
+libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+
+The last line is the ELF interpreter (dynamic linker).
+
+/lib64/ld-linux-x86-64.so.2 /bin/chmod +x /bin/chmod
+
+or on Ubuntu:
+
+/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /bin/chmod +x /bin/chmod
+
+ls -l /bin/chmod
+
+
+
+3. The Silent Failure: "A cron job is scheduled to run a backup script every night at 2 AM. The script works perfectly when you run it manually, but the cron job fails silently every night. What is the most common reason for this?" (Hint: Think about environment variables).
+
+The most common reason is that cron runs with a minimal environment and doesn't load the user's shell profile. Variables such as PATH, HOME, JAVA_HOME, or PYTHONPATH may be missing. Commands that work interactively may fail under cron because they cannot be found. I would first redirect output to a log file, inspect the environment with env, and then use absolute paths or explicitly define the required environment variables inside the script.

@@ -1,0 +1,38 @@
+Challenge 3: The Broken Cron
+Scenario: You added * * * * * echo "Cron is running" > /tmp/cron_test.log to a crontab, but the file is never created.
+The Task: Troubleshoot the cron service. Where do cron logs live in Debian/Ubuntu? How do you check if the cron daemon is actually running in WSL?
+
+ANSWER:
+
+To troubleshoot the cron service, you can follow these steps:   
+1. Check if the cron daemon is running in WSL:
+   You can use the following command to check if the cron service is active:
+   ```
+   sudo service cron status
+   ```
+   If the service is not running, you can start it with:
+   ```
+   sudo service cron start
+   ```
+2. Check cron logs in Debian/Ubuntu:
+   Cron logs are typically stored in the syslog file. You can view the cron logs by using the following command:
+   ```
+   grep CRON /var/log/syslog
+   ```  
+    This command will filter the syslog for entries related to cron, allowing you to see if there are any errors or if the cron job is being executed as expected. If you see entries indicating that the cron job is running but the file is not being created, there may be an issue with permissions or the environment in which the cron job is running.
+3. Check permissions:
+   Ensure that the user running the cron job has the necessary permissions to create files in the /tmp directory. You can check the permissions of the /tmp directory with:
+   ```
+   ls -ld /tmp
+   ```
+   If the permissions are not set correctly, you may need to adjust them to allow the cron job to create the file.  
+4. Check the cron job syntax:
+   Make sure that the cron job is correctly formatted in the crontab. You can edit the crontab with:
+   ```
+   crontab -e
+   ```
+   Ensure that the line you added is correct and does not contain any syntax errors. The line should look like this:
+   ```
+   * * * * * echo "Cron is running" > /tmp/cron_test.log
+   ```  
+By following these steps, you should be able to identify and resolve the issue with the cron job not creating the expected file.

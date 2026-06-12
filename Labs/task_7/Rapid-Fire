@@ -1,0 +1,21 @@
+1. How do you compress a directory using tar without keeping the original uncompressed directory?
+
+tar -cvzf archive.tar.gz directory/ && rm -rf directory/
+
+
+2.What is the difference between curl and wget?
+curl is for api requests, api handling, we can get,put,update,delete
+wget is only for downloading
+
+
+
+3. You need to tail a log file, but you only want to see new lines that contain the word "Exception". How do you combine commands to do this?
+
+tail -f file.log | grep Exception
+
+
+4. What command tells you which process is listening on port 443?
+
+ss -tunlp | grep 443
+lsof -i :443
+netstat -tunlp | grep :443

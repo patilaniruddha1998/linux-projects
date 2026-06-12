@@ -1,0 +1,14 @@
+Challenge 2: The Ghost File
+Scenario: A massive 50GB log file was deleted using rm, but df -h shows the space hasn't been freed up.
+The Task: Find out why this happens in Linux. Use the lsof command to find the deleted file that is still being held open by a process, and determine how to actually reclaim the disk space without rebooting the server.
+
+ANSWER
+
+To find the deleted file that is still being held open, you can use the following command:
+
+lsof | grep deleted
+
+This command will list all open files and filter for those that have been deleted. The output will show the process ID (PID) of the process holding the file open, the file descriptor, and the size of the file. To reclaim the disk space without rebooting the server, you can either stop the process that is holding the file open or use the truncate command to reduce the size of the file to zero.
+
+To stop the process, you can use the following command:
+kill -9 <PID>

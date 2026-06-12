@@ -1,0 +1,139 @@
+Challenge 4: The SSH Lockout
+Scenario: A developer generated an SSH keypair, put their public key in ~/.ssh/authorized_keys, but the server keeps asking for a password when they try to log in.
+The Task: SSH is notoriously strict about file permissions. Research and apply the exact chmod numeric permissions required for:
+
+The user's home directory (~)
+
+The .ssh directory (~/.ssh)
+
+The authorized_keys file (~/.ssh/authorized_keys)
+(Hint: If group or others have write access to any of these, SSH silently rejects the key for security reasons).
+
+
+
+
+
+
+Lab
+
+Let's make it very concrete. You have:
+
+Client user: aniruddhalinux
+Server user: alice
+Host: localhost
+
+Goal:
+
+aniruddhalinux  --------SSH------->  alice@localhost
+
+Step 1: Login as aniruddhalinux (CLIENT)
+
+Verify:
+
+whoami
+
+Output:
+
+aniruddhalinux
+
+Step 2: Generate SSH key (run as aniruddhalinux)
+ssh-keygen -t ed25519
+
+Press Enter for all prompts.
+
+This creates:
+
+/home/aniruddhalinux/.ssh/id_ed25519
+/home/aniruddhalinux/.ssh/id_ed25519.pub
+
+Verify:
+
+ls -l ~/.ssh
+
+Expected:
+
+id_ed25519
+id_ed25519.pub
+known_hosts
+Step 3: Become root (or use sudo)
+sudo su -
+Step 4: Create Alice's .ssh directory
+mkdir -p /home/alice/.ssh
+Step 5: Copy aniruddhalinux's public key into Alice's authorized_keys
+
+Run:
+
+cat /home/aniruddhalinux/.ssh/id_ed25519.pub >> /home/alice/.ssh/authorized_keys
+Step 6: Set ownership
+chown -R alice:alice /home/alice/.ssh
+Step 7: Set permissions
+
+Home directory:
+
+chmod 755 /home/alice
+
+.ssh directory:
+
+chmod 700 /home/alice/.ssh
+
+authorized_keys:
+
+chmod 600 /home/alice/.ssh/authorized_keys
+
+Verify:
+
+ls -ld /home/alice
+ls -ld /home/alice/.ssh
+ls -l /home/alice/.ssh/authorized_keys
+
+Expected:
+
+drwxr-xr-x alice alice /home/alice
+drwx------ alice alice /home/alice/.ssh
+-rw------- alice alice authorized_keys
+Step 8: Make sure sshd is running
+
+Ubuntu:
+
+sudo systemctl status ssh
+
+If stopped:
+
+sudo systemctl start ssh
+Step 9: Switch back to aniruddhalinux
+exit
+
+Verify:
+
+whoami
+
+Output:
+
+aniruddhalinux
+Step 10: SSH into alice
+ssh alice@localhost
+
+Expected:
+
+Welcome to Ubuntu...
+alice@localhost:~$
+
+No password should be asked.
+
+Diagram
+CLIENT
+=======
+User: aniruddhalinux
+
+Private Key
+/home/aniruddhalinux/.ssh/id_ed25519
+            |
+            | SSH
+            V
+
+SERVER
+=======
+User: alice
+
+Public Key
+/home/alice/.ssh/authorized_keys

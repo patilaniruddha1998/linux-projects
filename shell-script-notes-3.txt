@@ -1,0 +1,202 @@
+5) case statement:
+-----------------
+case $variable in
+  pattern)
+		commands
+		commands
+		;;
+  pattern2)
+     commands
+	 commands
+	 ;;
+  pattern3)
+     commands
+	 commands
+	 ;;
+   *)
+     default_commands
+	 ;;
+esac
+
+
+read -p "please provide fruit value" fruit
+
+fruit=$1
+
+case $fruit in
+   apple)
+      echo "today price of apple is Rs.250/kg
+   banana)
+      echo "today's price of banana is 60/dozen
+   orange)
+      echo "today's price of orange is 60/dozen
+   *)
+	echo "we only supply apple| banana | orange 
+esac
+     
+	 
+	 
+	 start stop restart
+	 
+action=$1
+
+case $action in
+	start) 
+	   systemctl start nginx
+	   ;;
+	stop)
+		systemctl stop nginx
+		;;
+	restart)
+	     systemctl restart nginx
+		 ;;
+	*)
+	  echo "pls provide any of stop|start|restart"
+	  echo "usage ./$0 stop| start|restart"
+	  ;;
+	  
+esac
+
+day="Monday"
+
+	Monday | Tuesday | Wednesday | Thursday | Friday)
+	  echo "$day is a weekday"
+	  ;;
+	Saturday | Sunday)
+	  echo "$day is a weekend"
+	  ;;
+	*)
+	  echo "Invalid day. please pass correct value"
+	  ;;
+esac
+
+	if the disk utilization is more than 75%
+	
+	immediately clear up some space
+	
+	if the disk utilization is more than 50%
+	
+	consider freeing up some space
+	
+	else
+	
+	     echo "disk usage is normal"
+		 
+	fi
+	
+	
+
+awk:
+---
+awk 'NR==2, NR==4 {print}' alternatives.log
+awk 'NR==2, NR==4 {print $12}' alternatives.log
+
+
+threshold_critical=75
+threshold_warning=50
+
+current_usage=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
+
+if [ $current_usage -ge $threshold_critical ]
+then
+	echo "Disk uage is critical. Take immediate action."
+elif [ $current_usage -ge $threshold_warning ]
+then
+     echo " Disk usage is high. consider frreing up some space"
+else 
+    echo "Disk utilization is normal. $current_usage"
+fi
+
+
+when to use nested if:
+----------------------
+
+active 
+
+systemctl status nginx
+
+service_name=nginx
+port=80
+
+# check if service is running or not
+
+if systemctl is-active --quiet $service_name  
+then
+	if ss -tnlp | grep -q ":80"
+	then
+	   echo "port 80 is also working"
+	 else
+	    echo "warning: nginx service is running but port 80 is not listening"
+    fi
+else
+   echo " nginx service is not running"
+fi
+
+loops:
+-----
+loops in shell script are control structures that allow you to execute a block of code repeatedly.
+
+3 types of loops:
+1. for loops
+2. while loops
+3. until loops
+
+1. for loops:
+-------------
+
+for variable in item1 item2 item3 ....itemN
+do
+	-----------
+	-----------
+done
+
+
+for fruit in apple banana cherry
+do
+	echo "I like $fruit"
+done
+	
+for file in *
+do
+        if [ -d "$file" ]; then
+                echo $file
+        fi
+done
+
+echo "starting of loop"
+for file in $(find . -type f)
+do
+        echo $file
+done
+echo "ending of loop"
+
+c-style of for loops:
+---------------------
+
+for (( i=0; i<=5; i++ ))
+do
+	echo $i
+	
+done
+
+
+0
+1
+2
+3
+4
+5
+6
+nested for loops:
+-----------------
+
+for (( i=1; i<=10; i++ ))
+do
+i=1
+        echo "Mutliplication table of $i"
+        for (( j=1; j<=10; j++ ))
+        do
+                echo "$i * $j = $(( $i * $j))"
+        done
+i++	
+done

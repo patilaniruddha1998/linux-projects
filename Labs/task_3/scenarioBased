@@ -1,0 +1,89 @@
+[1] The SRE Triage: "Our monitoring alerts say the web server is unresponsive, but you can still SSH into the box. Walk me through the exact commands you would run in the first 60 seconds to diagnose the issue."
+
+1. Check the status of the web server:
+```
+sudo systemctl status apache2
+```
+```
+2. Check the web server error logs:
+```
+sudo tail -n 50 /var/log/apache2/error.log
+```
+```
+3. Check if the web server is listening on the expected port:
+```
+sudo netstat -tuln | grep :80
+```
+```
+4. Check for any failed services:
+```
+sudo systemctl --failed
+```
+```
+5. Check the system resource usage:
+```
+top
+```
+6. Check for any recent changes or deployments:
+```sudo journalctl -u apache2 --since "1 hour ago"
+```
+7. Check for any network issues:
+```ping -c 4 google.com
+```
+8. Check for any firewall rules that might be blocking access:
+```sudo iptables -L -n
+
+9. Check for any disk space issues:
+```df -h```
+10. Check for any memory issues:
+```free -m```
+
+
+
+
+[2]The Permissions Puzzle: "User A creates a file. User B is in the same group as User A. User B gets a 'Permission Denied' error when trying to edit the file. Why did this happen, and how do you fix it permanently for all future files?" (Hint: Think about umask and SGID).
+
+
+
+This happened because the default permissions for new files created by User A do not allow group members (including User B) to edit the file. By default, the umask value may be set to 022, which results in new files having permissions of 644 (rw-r--r--), meaning that only the owner has write permissions.
+To fix this permanently for all future files, you can change the umask value to 002, which will give group members write permissions by default. You can do this by adding the following line to the user's shell configuration file (e.g., ~/.bashrc or ~/.profile):
+```bash
+umask 002
+```
+Additionally, you can set the SGID (Set Group ID) bit on the directory where the files are being created. This will ensure that all new files created in that directory inherit the group ownership of the directory, allowing group members to have the appropriate permissions. You can set the SGID bit with the following command:
+```bash
+chmod g+s /path/to/directory
+```
+By implementing these changes, User B will be able to edit the files created by User A without encountering a 'Permission Denied' error, and this will apply to all future files created in that directory.
+
+
+[3] The Load Average: "You run uptime and see a load average of 10.00, 8.50, 7.00 on a 4-core machine. What does this mean? Is the system recovering or getting worse?"
+
+On a 4-core machine, a load average of 10.00, 8.50, 7.00 means the system is heavily loaded because the load is significantly higher than the available 4 CPU cores. Since the 1-minute load (10.00) is higher than the 5-minute load (8.50), which is higher than the 15-minute load (7.00), the load is increasing over time. This indicates the system is getting worse, not recovering. I would investigate CPU usage, run queue length, I/O wait, and the top resource-consuming processes using tools such as top, vmstat, and iostat.
+top
+htop
+vmstat 1
+iostat -x 1
+
+
+[4] The Zombie: "What is a zombie process in Linux? Can you kill it with kill -9? If not, how do you get rid of it?"
+A zombie process in Linux is a process that has completed execution but still has an entry in the process table. 
+This happens because the parent process has not yet read the exit status of the child process. 
+A zombie process cannot be killed with kill -9 because it is not actively running; it is already dead. 
+To get rid of a zombie process, you need to terminate the parent process or have the parent process read the exit status of the child process using wait(). 
+Once the parent process acknowledges the termination of the child process, the zombie process will be removed from the process table.
+
+Commands:
+
+ps -el | grep Z
+
+kill -9 <zombie_pid>    -> does noting. Because the process is already dead.
+
+ps -o ppid= -p <zombie_pid>    -> find the parent
+
+ps -fp 1000     -> check the parent
+
+
+
+
+

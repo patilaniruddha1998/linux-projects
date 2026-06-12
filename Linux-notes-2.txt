@@ -1,0 +1,94 @@
+file viewing commands:
+-----------------------
+tail --> used to display last 10 lines
+tail -n 3
+tail -3  --> display last 3 lines
+tail file1.log file2.log --> display the last 10 lines in both the files 
+tail -q file1.log file2.log --> suppress the headers while displaying
+
+
+head file.log --> display first 10 lines of a file
+head -n 20
+head -20 file.log --> display 20 first 20 lines
+
+my file contains 1000 lines. i want to see 40-45 
+
+head -50 file.log | tail -5
+
+sort file.log --> sort/ arrange lines in an order
+
+sort -k <column number> file.log --> it will sort based on column
+
+sort -r -k <column number> file.log  --> reverse order
+
+sort -u file.log --> to remove duplicates
+
+grep --> used to search a file
+
+grep -i "warning" file.log --> ignore the case while searching/ greping
+
+grep -c "warning" file.log --> give me the count of occurences
+
+grep -n "warning" file.log --> gives the line number and the occurences
+
+grep -A5 -i  "warning" access.log  --> gives 5 lines after the occurence 
+ 
+grep -B5 -i  "warning" access.log  --> gives 5 lines before the occurence 
+
+grep -C5 -i  "warning" access.log  --> gives 5 lines before and after the occurence 
+
+grep -v "warning" access.log --> show lines that dont match
+
+
+wc --> count lines, words, characters
+wc -l  --> total lines
+wc -w --> total words
+wc -c --> total characters
+
+find <where-to-find> -type <file/directory> -name <filename> 
+
+find . -type f -name <filename>  
+
+find . -mtime -1  --> give me files/directories created/modified in last 24 hours or 1 day
+find . -mtime 1   --> exactly 1 day or 24 hours
+find . -mtime +1  --> before 1 day or 24 hours
+find . -mmin -10 --> last 10 minutes
+
+find and delete empty directories
+
+find . -type f -empty -delete --> delete empty files
+
+find . -type d -empty -delete --> delete empty directories
+
+find . -maxdepth 2 -type f -name test.txt  --> find in the 2nd level of directory
+
+
+sed (stream editor):
+-------------------
+ 
+sed -i 's/chenna/chandra/g' test.txt  --> replace in all the occurences
+
+sed -i -z 's/chenna/chandra/2' test.txt --> same line second occurence
+
+sed  '3 s/chenna/chandra/' test.txt  --> change in line number 3
+
+sed '/welcome to docker session/c\welcome to devops/' test.txt  --> change the line to welcome to devops
+
+sed '/welcome to docker session/i\welcome to devops/' test.txt  --> before the line
+sed '/welcome to docker session/a\welcome to devops/' test.txt  --> after the line
+
+system monitoring commands:
+--------------------------
+top -- to monitor cpu and memory
+
+top -u <username> --> user related processes
+
+top -p <processid> --> to monitor process utilization
+
+top -d 5 --> delay between the updates in seconds
+
+top -n 5 --> number of updates before top exits
+
+top -b -n 2 --> prints in batches 2 times
+
+top -c --> to see the full command

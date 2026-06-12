@@ -1,0 +1,28 @@
+vi url.txt
+
+https://google.com
+https://github.com
+http://localhost:9999
+
+vi monitor.sh
+
+-------------------------------------------------------------
+#! /bin/bash
+
+while read -r url; do
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+
+    if [[ "$status_code" == "200" || "$status_code" == "301" ]]; then
+        echo "[OK] $url is up ($status_code)"
+    else
+        echo "[FAIL] $url is unhealthy ($status_code)"
+    fi
+
+done < url.txt >> output-$(date +%F-%H%M%S).log
+
+---------------------------------------------------------------
+
+
+chmod +x monitor.sh
+
+./monitor.sh

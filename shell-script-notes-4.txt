@@ -1,0 +1,222 @@
+v
+2. while loops:
+----------------
+
+while loop also executes a block of code as long as a condition is true
+
+while [ condition ]
+do 
+  ------
+  ------
+done
+
+
+i=1
+while [ $i -le 5 ]
+do
+  echo "iteration No: $i "
+  i=$(( i + 1 ))
+done
+
+while read -r line
+do
+	echo $line
+
+done < filename.log
+
+echo "this is a file" > filename.txt
+
+<  --> input
+>  --> erase and add
+>> --> append
+
+until loop:
+-----------
+
+until [ condition ]
+do
+
+	-----
+	-----
+done
+
+
+i=1
+until [ $i -ge 5 ]
+do
+  echo "iteration No: $i "
+  i=$(( i + 1 ))
+done
+
+
+Arrays:
+------
+i=1 
+i="sujith"
+i=true
+fruits=("apple" "banana" "cherry")
+           0       1        2
+
+echo ${fruits[@]}
+echo ${fruits[2]}
+
+echo ${fruits}
+
+fruits[3]="mango"
+fruits=("apple" "banana" "cherry" "mango")
+
+unset fruits[2]
+
+echo ${#fruits[@]} == 3
+
+fruits=("apple" "banana" "mango")
+echo ${fruits[2]}
+
+fruits=("apple" "banana" "cherry")
+for fruit in "${fruits[@]}" 
+do
+	echo "I like $fruit"
+done
+
+declare -a fruits
+
+read -p "please pass the fruit values" fruits
+
+for fruit in "${fruits[@]}" 
+do
+	echo "I like $fruit"
+done
+
+functions in shell scripting:
+-----------------------------
+script.sh
+
+a function is a reusable block of code that performs a specific task. 
+instead of repeating code, you define it  once and call it multiple times
+
+---------
+---------
+----------
+----------
+
+
+syntax of function:
+
+function_name(){
+	----
+	----
+	----
+}
+
+function function_name(){
+	----
+	----
+	----
+}
+function_name
+
+
+testing(){
+	echo "Hello World!"
+
+}
+
+testing
+
+testing 
+
+
+
+
+greet(){
+	local name1=$1
+	local name2=$2
+	local name3=$3
+	echo "Hello name1 is $name1"
+	echo "Hello name2 is $name2"
+	echo "Hello name3 is $name3"
+}
+
+greet "krishna" "Ram"
+
+
+sum(){
+	local num1=$1
+	local num2=$2
+	local total=$(( num1 + num2 ))
+
+}
+
+sum 10 20 
+
+
+whoami
+
+
+get_current_user(){
+	echo $(whoami)
+
+}
+
+user=$(get_current_user)
+
+echo "logged in user is: $user
+
+
+echo $?  --> 0 the previous command execution is successful
+
+return 2
+
+
+return:
+-------
+
+0-255
+
+check_even(){
+
+	if (( $1 % 2 == 0 )); then
+	   return 0
+	else
+	   return 
+	fi
+}
+	
+check_even 5
+if [ $? -eq 0 ]; then
+  echo "Even"
+else
+  echo "Odd"
+fi
+
+
+Crontab:
+--------
+is used to automate a task/shell script 
+or schedule a specific tasks to run at particular times
+
+crontab -l --> to see the listed jobs for that particular user 
+crontab -e  --> edit the crontab
+
+syntax:
+-------
+ 
+* * * * * 
+
+1* --> represents minutes (0-59)
+2* --> hour (0-23)
+3* --> day of the month (1-31)
+4* --> month (1-12)
+5* --> day of the week (0-6) 0 --> sunday
+
+
+* * * * *  <file-name>  >> access.log 2>&1
+
+to execute a script at 10pm 
+
+5 21 * * * /root/script/sh
+
+
+5 21 15 6 *  
+
+0 23 * * * /root/script/sh

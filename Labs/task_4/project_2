@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DATE=$(date +%F-%H%M%S)
+UPTIME=$(uptime -p)
+AVAILABLE_RAM=$(free -h | awk '/Mem:/ {printf("Total RAM:%-8s Used RAM:%-8s Free RAM:%-8s",$2,$3,$4)}')
+AVAILABLE_DISK=$(df -h / | awk 'NR==2 {printf("Filesystem:%-8s Total Size:%-8s Used:%-8s Available:%-8s",$1,$2,$3,$4)}')
+PROCESS=$(ps -eo pid,user,comm,--sort=-%cpu | awk 'NR<=4')
+
+echo "-----------------------------------"
+echo "System Health Dashboard - $DATE"
+echo "-----------------------------------"
+echo "-----------------------------------"
+echo "Uptime: $UPTIME"
+echo "-----------------------------------"
+echo "RAM Usage: $AVAILABLE_RAM"
+echo "-----------------------------------"
+echo "Disk Usage: $AVAILABLE_DISK"
+echo "-----------------------------------"
+echo "Top 3 CPU-Intensive Processes:"
+echo "$PROCESS"
+echo "-----------------------------------"
+

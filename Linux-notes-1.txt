@@ -1,0 +1,110 @@
+Linux is a free and open-source operating system
+
+Distributions:
+------------
+Ubuntu - 
+Redhat - 
+Debian
+oracle Linux
+Amazon linux 
+centos
+Suse Linux
+
+
+Direcoty Structure:
+-------------------
+
+/ --> root directory
+/bin --> contians ready-to-use programs/ binaries/executables. normal users have access
+/sbin --> cotains system binaries. only root user have access to these commands to execute.
+/dev --> devices files 
+/home/ubuntu --> holds the personal directories for regular users
+/root  ---> home directory for root user
+/etc  --> the core system configuration directory
+/proc --> contains information about the current running processes and some kernel parameters like cpu and memory information
+/run --> contains runtime data stored in this directory for system purpose which will erased for reebot
+/opt --> used to install third party softwares.
+/sys --> same as /proc. contians more information system and interface
+/tmp --> temporary. every user will have all the access to this directory. 
+/usr --> user system reources or binaries will be here
+/boot --> booting related information
+/var --> variable information related directory will be under this var directory
+
+
+
+uname
+clear
+ls -l
+ls -ltr
+ls -ltrh
+pwd - print Working Directory
+~ --> tilde symbol represents user home directory
+
+Relative Path And Absolute path
+----------------------------------
+mkdir Devops
+mkdir /home/ubuntu/Devops --> absolute Path
+
+Absolute path starts from /
+Relative path starts directly with name of directory
+
+man <command name> --> to see the manual pages of a command
+
+
+whoami --> gives you which user you logged in as
+who --> how many users are logged in at the moment
+
+history --> to see the previous commands executed
+history n --> last n number of commands you want to see in history
+history | grep -i docker --> search history
+!! --> to execute the previous command
+!<line-number> --> run a specific command from history
+
+
+Devops/Linux/Shell/AWS/aws.txt
+
+cd ~ --> takes you to user home directory
+cd - --> takes you to previous directory where you are in
+cd .. --> takes you to one step back in the directory path
+cd ../..
+
+rmdir --> removes emp directory
+
+rm  --> remove files
+rm -r --> used to delete directory recursively 
+rm -rf --> force delete 
+
+vim <fileName>  -> edits the file
+i -> to insert [write mode]
+:wq--> write and exit
+:q! --> quit/exit
+
+cat <file Name> --> display the content of a file
+cat <file1> <file2> --> display content of both the files
+cat * --> to display the content all the files inside the directory
+cat -n <filename> --> display with line numbers
+cat > file.txt --> it will create the file and write the contents and press CTRL - D to exit
+cat file1.txt file2.txt  > newfile.txt --> copied contents to new file
+> file1.txt --> to nullify the file or delete the contents of file
+
+tac --> to display content of a file in reverse order
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+
+Packages and package managers
+-----------------------------
+In linux package is nothing but a bundle of files archived into a single file. these packages will contain everything 
+which is required to install and run the application.
+
+
+application packages:
+--------------------
+
+.deb  --> Debian, Ubuntu, Linux mint
+.rpm  --> RHEL, centos, amzon linux, fedora
+
+package managers:
+----------------
+apt --> ubuntu, debian
+yum/dnf --> RHEL, centos, Amazon Linux
+apk  --> alpine Linux
+
+apt install nginx
+yum install nginx
+
+
+dpkg -i filename.deb
+
+systemctl status <application-name>
+systemctl restart <application>
+systemctl stop <application>
+systemctl enable <application>  -->to restart/start application by default whenever there is a reboot of server
+systemctl disable <application> --> to not automatically start on system reboot
+
+journalctl -u <application>  --> to see the application status logs
+ sudo apt update --> to update with the versions in your respository
+ 
+ sudo apt upgrade --> to upgrade already installed applications / install latest versions
+ sudo apt remove <application>  --> removes/uninstall an application
+ sudo apt purge <application>  -> completely removes application and its configuration files
+ sudo apt autoremove <application> --> it will remove dependency softwares from your system
+ 
+ 
+zip:
+---
+to archive single/multiple files or directories into one package file.zip
+
+zip <filename.zip> file1 file2 directory1 directory2
+
+
+zip -r <filename.zip> direcroty/
+
+unzip:
+------
+to extract a zip package
+unzip -l <zip filename> --> to see the contents of the archive
+
+unzip <zip filename> --> extracts in the current working direcotry
+
+unzip <zip filename> -d <destination path>  --> to store the extracted contents in this destination path
+
+tar:
+----
+tar will archive and alos compresses the archieve
+it will keep the directory/file permissions
+
+.tar --> just archive
+.tar.gz --> archieve and compresses
+
+
+tar -cvf <file.tar> direcotry/ file1 file2
+
+tar -xvf <file.tar>   ---> extract to current working direcotry
+
+tar -tvf <file.tar>  ---> list the contents
+
+tar -cvzf <file.tar.gz> directory/ filename   ---> creates a archive 
+tar -xvzf <file.tar.gz> -C /opt  --> extracts in that directory path
+
+User Management:
+---------------
+three types of users
+
+1. Root user --> default user who has full access like an administrator  --> UID 0
+2. system users --> bots/application users. for system application users --> 1 to 999
+3. Regular users -->  created by admins. each user will have their own home directory  --> 1000 
+
+
+groups:
+------
+a group is a collection of user
+100 user
+
+devops  --> 
+
+
+
+useradd --> to create a user
+a default group/ primary group will be created with same name
+
+useradd chenna
+
+group chenna --> primary group
+
+devops
+
+
+any user can be 
+
+1. one primary group
+2. any number of secondary groups
+
+useradd chenna  -m --> to create a home directory
+                -s --> define a shell to this user /bin/bash /bin/sh /bin/csh
+			    -u --> set a custom id
+				-d --> to set custom home directory for a user
+
+
+/etc/passwd  ---> to see the users in your system
+/etc/group --> to see all the groups in the system
+/etc/shadow  --> to see the users and passwords
+
+groups  --> to see which groups the user is part of
+
+
+useradd -m test -s /bin/sh
+
+
+adduser
+
+useradd
+
+delete a user
+--------------
+userdel <username> --> to delete a user
+userdel -r <username> --> user along with home directory will be deleted
+
+
+passwd --> to change the password or to set the password
+
+id --> to show user and group ids along with user/group names
+
+
+groups:
+--------
+groupadd <groupname>
+
+
+usermod: to modify user related information
+-------
+usermod -g <groupname> <username> --> to change the primary group of a user
+
+usermod -aG <groupname> <username> --> to add a user to secondary group
+
+usermod -l <old name> <new name> --> to rename a user
+
+        -d --> change home direcotry
+		-s --> shell /bin/bash /bin/sh
+		-L --> to lock a user
+		-U --> to unlock a user
+		-g --> to change user primary group
+		-aG --> to add a user to secondary group
+		
+		
+groupdel --> to delete a group
+
+if any user is part of this group , you cannot delete that group

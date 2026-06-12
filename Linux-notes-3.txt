@@ -1,0 +1,122 @@
+free:
+-----
+free -h 
+
+total -- total size of RAM
+free --> idle memory
+shared --> tempfs used
+buff/cache --> kernel buffers/cache is using this amount of memory
+available --> free +reclaimable from cache
+
+free -h -s N --> N is the delay between updates
+
+uptime:
+-------
+to see the uptime of system and load average and how many users are logged in to server at the moment
+
+time:
+-----
+time taken for any command to execute
+time <command>
+
+
+watch:
+------
+to monitor any command 
+watch <command>
+watch -n <seconds>  <command>
+
+mpstat - multi process statistics
+---------------------------------
+
+mpstat --> gives you only average utilization since the reboot of machine
+
+mpstat -P ALL  --> each core utilization
+
+mpstat -P ALL N --> N seconds of delay between the updates
+
+mpstat -P ALL N times --> updated me every N seconds for this times 
+
+mpstat -P <coreNumber>  --> monitor only particular processor
+
+
+vmstat: virtual memory statistics
+---------------------------------
+
+vmstat --> it will give average utilization
+
+vmstat -S M --> it will give in MB
+
+vmstat 1 -> to see real updates every 1 seconds
+
+vmstat -t --> to add the timestamp to the output
+
+
+iostat: input output statistics
+-------------------------------
+to used to analyze the disk performance, storage bottlenecks, read/writes
+iostat --> average of i/o opearations
+iostat 1 --> to see the real time utilization per second 
+
+df:
+--
+
+to see the hard disk/ filesystem storage
+df -h --> to see the disks attached and utilization
+df -h . --> the current working directory part of which disk
+
+df -h <directoryPath> --> directory belongs to which disk
+
+du : disk utilization
+----- 
+du -h --> the total disk utilized by this directory
+
+du -sh <directoryName> --> show total size of the directory
+
+du -h --max-depth=1 var | sort -hr  --> sorting based on utilization
+
+whereis <command>
+-----------------
+gives the binary, manual pages directory path
+
+
+whatis <command>:
+-----------------
+usage of the command
+
+which <command>
+---------------
+
+to see the executable path
+
+
+Process Management commands:
+----------------------------
+any program under execution is called as a process
+
+ps:(process status)
+-------------------
+
+ps -ef --> all the processes running in the system
+
+ps -ef | grep "process name"
+
+ps -f -u <username> --> user related processes
+
+ps -f -p <pid>  --> to only see details about the process
+
+ps -aux --> to get more details about a process
+
+
+Soft Link and Hard Link:
+-------------------------
+
+soft link is like a shortcut. you can create a softlink to both files an directories
+
+ln -s <src file/direcroty> <softlink name> --> to create a soft link
+
+hard link:
+-----------
+you can create a hardlink to files but not for directories
+
+ln <src file> <hardlink file name> 

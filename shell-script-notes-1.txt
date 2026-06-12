@@ -1,0 +1,170 @@
+Shell Scripting:
+----------------
+
+what is shell scripting?
+
+A shell script is a simple text file with .sh extension that contains the commands that you need to execute
+
+vim demo.sh
+
+sudo apt install nginx -y 
+
+
+10 lines 
+
+ 
+.txt
+.yaml
+
+what is the shell?
+
+A shell is a command-line interpreter that acts as a bridge b/w the user and the kernel.
+
+
+Types of shells:
+---------------
+bourne shell --> sh 
+bourne again shell --> bash
+korn shell --> ksh
+cshell --> csh
+zshell --> zsh 
+
+apt install zsh tcsh ksh 
+
+
+echo /etc/shells  --> what are the shells available in your system.
+
+echo $0  --> current shell you are using
+
+why we need shell script?
+
+1. automation --> to automate the repetitive task
+2. Devops CI/CD
+3. User/Group Management
+4. Software Installation 
+5. Health checks 
+
+Command line symbols:
+--------------------
+# --> is used to comment something
+#ls --> commented
+
+demo.sh
+-------
+# this shell script is used to take backup of nginx logs
+
+
+; --> command separator
+
+echo "my shell is ${SHELL}"  --> IT will expand the variable and print its values
+echo 'my shell is ${SHELL}'  --> it will not be expanded
+
+&& --> logical AND
+
+echo "hello" && echo "world" 
+
+true true  --> true
+false false --> false
+false true --> false
+true  false --> false
+
+ls test && echo "hello world"
+ 
+|| --> logical OR
+
+true true --> true
+
+false true --> true
+
+true false --> true
+
+false false --> false 
+
+ls test || echo "hello world"
+
+
+& --> to run any process in background
+
+
+| --> pipe 
+
+to pass output of one command as the input to other command
+
+Redirections:
+------------
+0 --> standard input
+
+1 --> standard output
+2 --> standard error
+
+> -->  redirect output
+
+>>  --> redirect output and append to the existing
+
+<   -> redirect input 
+
+ls -l /devops /var/log/nginx/  > success.txt 2> error.txt
+
+ls -l /devops /var/log/nginx/  > success.txt 2>&1
+
+ls -l /devops /var/log/nginx/  &> success.txt 
+
+{} --> brace expansion 
+touch file{1..10}.sh
+
+[] --> character expansion
+
+cat shell[456].sh
+
+* --> wildcard for everything
+
+? --> single character wildcard
+
+$  --> end of line
+
+
+
+demo.sh
+--------
+#! /bin/bash --> shebang line
+
+echo "Hello World"
+echo "today date and time is $(date)"
+
+
+how to execute a shell script
+------------------------------
+
+sh demo.sh 
+
+bash demo.sh 
+
+./demo.sh  --> uses the shell defined in the shebang line
+
+
+how to run shell script in debug mode:
+-------------------------------------
+100 lines shell script 
+
+debug mode 
+
+sh -x demo.sh  --> to run entire shell script in debug mode
+
+
+to run particular commands in debug mode
+
+#! /bin/sh
+
+echo "Hello World"
+set -x
+echo "today date and time is $(date)"
+echo "in debug mode"
+
+set +x
+
+echo "out of debug mode"
+
+
+set -e   --> to exit shell script immediately
+
+set -o pipefail 
