@@ -1,0 +1,27 @@
+Challenge 6: The "Out of Memory" Assassin
+Scenario: A Java application keeps crashing randomly. There are no errors in the application logs; the process simply vanishes.
+The Task: 
+In Linux, when RAM runs out, the kernel's OOM (Out of Memory) Killer terminates processes to save the OS. Find the system log file (in /var/log/ or via journalctl) where the kernel records its "kills". Write the exact grep command to search the system logs for OOM killer interventions.
+
+
+
+
+Practice Challenge
+
+Create a process consuming memory:
+
+stress-ng --vm 1 --vm-bytes 95% --timeout 60s
+
+
+
+Monitor:
+
+free -h
+
+and after the stress test:
+
+journalctl -k | grep -Ei "oom|killed process"
+
+The most useful command to remember for interviews is:
+
+journalctl -k | grep -Ei "oom|killed process"

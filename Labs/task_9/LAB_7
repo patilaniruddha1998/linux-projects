@@ -1,0 +1,38 @@
+Lab 7: The Un-deletable File (Immutability)
+Title: Protecting the Core Configuration
+Difficulty Level: Intermediate → Advanced
+Objective: Use filesystem attributes to completely lock down a file, preventing even the root user from deleting or modifying it.
+
+Environment Setup Commands:
+
+cd ~/labs/security
+cat << 'EOF' > nginx_core.conf
+server {
+    listen 80;
+    server_name localhost;
+}
+EOF
+
+
+Tasks to Perform:
+
+Change the file attributes to make nginx_core.conf immutable using the chattr command.
+
+Switch to the root user (or use sudo) and try to delete the file (sudo rm -f nginx_core.conf). It should fail.
+
+Try to append text to the file (echo "test" | sudo tee -a nginx_core.conf). It should fail.
+
+View the file's special attributes to confirm its status using lsattr.
+
+Remove the immutable flag so the file can be managed normally again.
+
+Expected Outcome: You learn how to lock files at the filesystem level, overriding all standard rwx permissions.
+Validation Steps:
+
+lsattr nginx_core.conf should show ----i---------e---- nginx_core.conf.
+Common Mistakes: Forgetting that chattr exists and assuming a compromised root account can immediately delete everything.
+Real-World Relevance: Hackers and malware often try to alter /etc/passwd or SSH keys. SREs use chattr +i on critical system files so that even if an attacker gains root, they hit a confusing brick wall when trying to modify or delete them.
+
+
+
+
