@@ -1,0 +1,18 @@
+File Management:
+
+Create a workspace:
+
+mkdir -p ~/linux-labs/week1
+cd ~/linux-labs/week1
+
+mkdir docs images backup
+touch docs/file{1..5}.txt
+
+
+Tasks
+List all files in long format.   --> ls -l
+Show hidden files.   ----> ls -la
+Copy all files from docs to backup.  ---->  cp -r docs/* backup/
+Rename file1.txt to notes.txt.  ---->  mv /docs/file1.txt /docs/notes.txt
+Remove file5.txt. ----> rm -rf file5.txt
+Count files inside docs. ----> ls -n | awk '{print $2}'

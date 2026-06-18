@@ -1,0 +1,15 @@
+Create this structure:
+
+mkdir -p ~/labs/practice/{docs,images,backup}
+touch ~/labs/practice/docs/file{1..5}.txt
+
+Tasks:
+
+List files sorted by modification time.   ls -ltrh
+Copy all .txt files into backup. cp 
+Rename file1.txt to notes.txt.
+Find files larger than 0 bytes.
+Delete file5.txt.
+Count the number of files inside docs.
+
+
