@@ -15,4 +15,4 @@ Show hidden files.   ----> ls -la
 Copy all files from docs to backup.  ---->  cp -r docs/* backup/
 Rename file1.txt to notes.txt.  ---->  mv /docs/file1.txt /docs/notes.txt
 Remove file5.txt. ----> rm -rf file5.txt
-Count files inside docs. ----> ls -n | awk '{print $2}'
+Count files inside docs. ----> find . -type f | wc -l       or     ls docs/ | wc -l
